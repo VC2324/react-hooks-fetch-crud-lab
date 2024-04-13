@@ -1,10 +1,10 @@
 import React from "react";
 
-function QuestionList() {
+function QuestionList({mappedQuestions}) {
   return (
     <section>
       <h1>Quiz Questions</h1>
-      <ul>{/* display QuestionItem components here after fetching */}</ul>
+      <ul>{mappedQuestions}</ul>
     </section>
   );
 }
