@@ -10,17 +10,59 @@ function QuestionForm(props) {
     correctIndex: 0,
   });
 
+
+
   function handleChange(event) {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
     });
   }
+//// need to do 2nd deliverable use feth\c post jhere wfrote it beforer  buyt was posting empty obj with no values 
+
+
+
 
   function handleSubmit(event) {
     event.preventDefault();
+    const newFormData= {
+      prompt: formData.prompt,
+      answers: [
+        formData.answer1,
+        formData.answer2,
+        formData.answer3,
+        formData.answer4, 
+      ],
+      correctIndex: formData.correctIndex
+
+    }
+    fetch('http://localhost:4000/questions',{
+      method: "POST",
+      headers:{ 
+        "Content-Type": "application/json" 
+      },
+        body: JSON.stringify (newFormData)
+})
+.then(response => response.json())
+.then ((newQuestionObj) =>{
+  props.setQuestions(prevQuestions => [...prevQuestions, newQuestionObj])
+  setFormData({
+    prompt :"",
+   answer1:'',
+   answer2:'',
+   answer3:'',
+   answer4:'',
+   correctIndex: 0,
+  
+  })
+   
+})
     console.log(formData);
   }
+
+
+  
+  
 
   return (
     <section>
@@ -84,7 +126,7 @@ function QuestionForm(props) {
             <option value="3">{formData.answer4}</option>
           </select>
         </label>
-        <button type="submit">Add Question</button>
+        <button  type="submit">Add Question</button>
       </form>
     </section>
   );
